@@ -1,0 +1,116 @@
+#!/bin/bash
+
+set -e
+
+sign_in_address=https://www.destroyallsoftware.com/screencasts/users/sign_in
+
+# get the csrf token from the login form
+wget -O loginpage.html ${sign_in_address}
+csrf_token=`cat loginpage.html | grep value | grep authenticity_token | tr '=' ' ' | awk '{print $26}' | sed s/\"//g`
+rm loginpage.html
+
+# login and save the cookies
+post_data="utf8=%E2%9C%93&authenticity_token=${csrf_token}%3D&user%5Bemail%5D=${DAS_USERNAME}&user%5Bpassword%5D=${DAS_PASSWORD}&user%5Bremember_me%5D=0&commit=Sign+in"
+wget -O /dev/null --post-data ${post_data} --keep-session-cookies --save-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/users/sign_in
+
+# make sure download directory exists
+if [ ! -d screencasts ]; then
+  mkdir screencasts
+fi
+
+# get the files!
+wget -O screencasts/01-statistics-over-git-repositories.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/statistics-over-git-repositories/download
+wget -O screencasts/02-how-and-why-to-avoid-nil.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/how-and-why-to-avoid-nil/download
+wget -O screencasts/03-building-rspec-from-scratch.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/building-rspec-from-scratch/download
+wget -O screencasts/04-source-code-history-integrity.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/source-code-history-integrity/download
+wget -O screencasts/05-extracting-domain-objects.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/extracting-domain-objects/download
+wget -O screencasts/06-conflicting-principles.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/conflicting-principles/download
+wget -O screencasts/07-growing-a-test-suite.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/growing-a-test-suite/download
+wget -O screencasts/08-processes-and-jobs.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/processes-and-jobs/download
+wget -O screencasts/09-exceptions-and-control-flow.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/exceptions-and-control-flow/download
+wget -O screencasts/10-fast-tests-with-and-without-rails.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/fast-tests-with-and-without-rails/download
+wget -O screencasts/11-git-workflow.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/git-workflow/download
+wget -O screencasts/12-packaging-in-ruby-and-python.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/packaging-in-ruby-and-python/download
+wget -O screencasts/13-file-navigation-in-vim.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/file-navigation-in-vim/download
+wget -O screencasts/14-extracting-objects-in-django.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/extracting-objects-in-django/download
+wget -O screencasts/15-quick-and-easy-perf-tests.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/quick-and-easy-perf-tests/download
+wget -O screencasts/16-a-refactoring-story.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/a-refactoring-story/download
+wget -O screencasts/17-wrapping-third-party-apis.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/wrapping-third-party-apis/download
+wget -O screencasts/18-clarity-via-isolated-tests.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/clarity-via-isolated-tests/download
+wget -O screencasts/19-composing-a-unix-command-line.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/composing-a-unix-command-line/download
+wget -O screencasts/20-tar-fork-and-the-tar-pipe.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/tar-fork-and-the-tar-pipe/download
+wget -O screencasts/21-coupling-and-abstraction.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/coupling-and-abstraction/download
+wget -O screencasts/22-test-isolation-and-refactoring.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/test-isolation-and-refactoring/download
+wget -O screencasts/23-spiking-and-continuous-spiking.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/spiking-and-continuous-spiking/download
+wget -O screencasts/24-notes-on-stubbing.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/notes-on-stubbing/download
+wget -O screencasts/25-controller-refactoring-demo-part-1.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/controller-refactoring-demo-part-1/download
+wget -O screencasts/26-controller-refactoring-demo-part-2.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/controller-refactoring-demo-part-2/download
+wget -O screencasts/27-extracting-from-controller-to-model.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/extracting-from-controller-to-model/download
+wget -O screencasts/28-acceptance-tests.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/acceptance-tests/download
+wget -O screencasts/29-extracting-from-models.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/extracting-from-models/download
+wget -O screencasts/30-some-vim-tips.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/some-vim-tips/download
+wget -O screencasts/31-history-spelunking-with-unix.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/history-spelunking-with-unix/download
+wget -O screencasts/32-performance-of-different-test-sizes.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/performance-of-different-test-sizes/download
+wget -O screencasts/33-simple-bash-script-testing.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/simple-bash-script-testing/download
+wget -O screencasts/34-splitting-into-fine-grained-tests.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/splitting-into-fine-grained-tests/download
+wget -O screencasts/35-which-tests-to-write.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/which-tests-to-write/download
+wget -O screencasts/36-tdding-spikes-away-with-rebase.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/tdding-spikes-away-with-rebase/download
+wget -O screencasts/37-what-goes-in-active-records.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/what-goes-in-active-records/download
+wget -O screencasts/38-what-goes-in-active-records-part-2.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/what-goes-in-active-records-part-2/download
+wget -O screencasts/39-outside-in-tdd-stubs-vs-stash.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/outside-in-tdd-stubs-vs-stash/download
+wget -O screencasts/40-web-apps-when-to-test-in-isolation.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/web-apps-when-to-test-in-isolation/download
+wget -O screencasts/41-untested-code-part-1-introduction.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/untested-code-part-1-introduction/download
+wget -O screencasts/42-untested-code-part-2-adding-tests.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/untested-code-part-2-adding-tests/download
+wget -O screencasts/43-untested-code-part-3-refactoring-1.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/untested-code-part-3-refactoring-1/download
+wget -O screencasts/44-untested-code-part-4-refactoring-2.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/untested-code-part-4-refactoring-2/download
+wget -O screencasts/45-emacs-chainsaw-of-chainsaws.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/emacs-chainsaw-of-chainsaws/download
+wget -O screencasts/46-stubbing-unloaded-dependencies.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/stubbing-unloaded-dependencies/download
+wget -O screencasts/47-brittle-and-fragile-tests.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/brittle-and-fragile-tests/download
+wget -O screencasts/48-repository-statistics-in-raptor.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/repository-statistics-in-raptor/download
+wget -O screencasts/49-generating-coupons-with-bash.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/generating-coupons-with-bash/download
+wget -O screencasts/50-shorter-class-syntax.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/shorter-class-syntax/download
+wget -O screencasts/51-when-to-generalize-in-tdd.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/when-to-generalize-in-tdd/download
+wget -O screencasts/52-the-vimrc.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/the-vimrc/download
+wget -O screencasts/53-pushing-complexity-down.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/pushing-complexity-down/download
+wget -O screencasts/54-three-test-shapes.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/three-test-shapes/download
+wget -O screencasts/55-sucks-rocks-1-the-rails-app.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/sucks-rocks-1-the-rails-app/download
+wget -O screencasts/56-sucks-rocks-2-computing-scores.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/sucks-rocks-2-computing-scores/download
+wget -O screencasts/57-sucks-rocks-3-the-search-engine.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/sucks-rocks-3-the-search-engine/download
+wget -O screencasts/58-sucks-rocks-4-caching.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/sucks-rocks-4-caching/download
+wget -O screencasts/59-sucks-rocks-5-a-bug-and-a-model.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/sucks-rocks-5-a-bug-and-a-model/download
+wget -O screencasts/60-sucks-rocks-6-a-controller.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/sucks-rocks-6-a-controller/download
+wget -O screencasts/61-sucks-rocks-7-more-cucumber.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/sucks-rocks-7-more-cucumber/download
+wget -O screencasts/62-sucks-rocks-8-the-whole-design.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/sucks-rocks-8-the-whole-design/download
+wget -O screencasts/63-pretty-git-logs.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/pretty-git-logs/download
+wget -O screencasts/64-mutation-in-tell-dont-ask.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/mutation-in-tell-dont-ask/download
+wget -O screencasts/65-a-magical-isolation-story.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/a-magical-isolation-story/download
+wget -O screencasts/66-ugly-tests-trigger-refactoring.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/ugly-tests-trigger-refactoring/download
+wget -O screencasts/67-the-mock-obsession-problem.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/the-mock-obsession-problem/download
+wget -O screencasts/68-test-driving-shell-scripts.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/test-driving-shell-scripts/download
+wget -O screencasts/69-conditional-whac-a-mole.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/conditional-whac-a-mole/download
+wget -O screencasts/70-time-to-first-request.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/time-to-first-request/download
+wget -O screencasts/71-test-isolation-without-mocks.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/test-isolation-without-mocks/download
+wget -O screencasts/72-functional-core-imperative-shell.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/functional-core-imperative-shell/download
+wget -O screencasts/73-collapsing-services-into-values.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/collapsing-services-into-values/download
+wget -O screencasts/74-splitting-active-record-models.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/splitting-active-record-models/download
+wget -O screencasts/75-removing-a-rubinius-feature.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/removing-a-rubinius-feature/download
+wget -O screencasts/76-python-vs-ruby-objects.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/python-vs-ruby-objects/download
+wget -O screencasts/77-where-correctness-is-enforced.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/where-correctness-is-enforced/download
+wget -O screencasts/78-separating-arrangement-and-work.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/separating-arrangement-and-work/download
+wget -O screencasts/79-primitive-obsession.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/primitive-obsession/download
+wget -O screencasts/80-isolating-by-separating-value.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/isolating-by-separating-value/download
+wget -O screencasts/81-imperative-to-oo-to-functional.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/imperative-to-oo-to-functional/download
+wget -O screencasts/82-debugging-with-tests.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/debugging-with-tests/download
+wget -O screencasts/83-test-cases-vs-examples.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/test-cases-vs-examples/download
+wget -O screencasts/84-a-bit-of-c.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/a-bit-of-c/download
+wget -O screencasts/85-analyzing-context-switches.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/analyzing-context-switches/download
+wget -O screencasts/86-actor-syntax-from-scratch.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/actor-syntax-from-scratch/download
+wget -O screencasts/87-running-tests-asynchronously.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/running-tests-asynchronously/download
+wget -O screencasts/88-test-recommendations.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/test-recommendations/download
+wget -O screencasts/89-when-rails-is-right.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/when-rails-is-right/download
+wget -O screencasts/90-a-day-in-the-life.mov --load-cookies cookies.txt https://www.destroyallsoftware.com/screencasts/catalog/a-day-in-the-life/download
+
+# those were some good cookies!
+rm cookies.txt
+
+echo 'SUCCESS!!'
