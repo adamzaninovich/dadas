@@ -1,5 +1,11 @@
 # Download all destroy all software
 
+## Notes
+
+This script uses wget. Macs do not ship with wget anymore, so you'll have to install it first. I recommend [homebrew](http://mxcl.github.io/homebrew/).
+
+    $ brew install wget
+
 ## Usage
 
     $ chmod +x dadas
