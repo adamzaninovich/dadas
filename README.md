@@ -1,6 +1,8 @@
-# Download all destroy all software
+# Download all Destroy All Software
 
 ## Notes
+
+(for Marc)
 
 This script uses wget. Macs do not ship with wget anymore, so you'll have to install it first. I recommend [homebrew](http://mxcl.github.io/homebrew/).
 
